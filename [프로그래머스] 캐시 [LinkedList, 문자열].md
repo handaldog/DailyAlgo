@@ -50,7 +50,11 @@ class Solution {
             
         for(int i=0;i<cities.length;i++){
             if(que.contains(cities[i])){
-         드
+
+```
+
+[두번째 코드] - 성공
+
 ```
 import java.util.*;
 
