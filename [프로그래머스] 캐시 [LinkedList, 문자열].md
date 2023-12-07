@@ -18,16 +18,22 @@
 
 ---
 ### ❗️ 풀이 
-
+1. 포함된 것, 포함 안 된 것으로 1차로 나누고 3이 넘는 것 안넘는 것으로 2차로 나누어서 계산했다.
+2. 포함 안된 부분은 그냥 기본적은 연산으로 가능해서 쉽게 했지만
+3. 포함 된 부분에서 빼는 연산이 너무 헷갈려서 엄청 그리면서 풀었던 것 같다.
+4. 자세하게 설명해보자면
+   - 포함 된 부분에서 3 미만이면 그냥 넣었다.
+   - 3이면 해당 단어 삭제하고 넣었다.
+   - 내가 헷갈렸던 것은 LRU 알고리즘때문에 같은 단어 일때 빼고 다시 넣어줘야 하는 지 아니면 같은 단어여도 각 각 다르게 봐야하는 지에 대해 많이 고민했었던 것 같다.
 
 
 --- 
 ### 👨‍💻 배운 점
-
+1. LinkedList는 엄청나게 편리한 친구이다.
 
 ---
 ### 💰 코드
-[첫번째 코드]
+[첫번째 코드] - 실패
 ```
 import java.util.*;
 
@@ -44,38 +50,55 @@ class Solution {
             
         for(int i=0;i<cities.length;i++){
             if(que.contains(cities[i])){
-                if(que.size() < cacheSize){
-                    answer += 5;
-                    que.offer(cities[i]);
-                }
-                else{
-                answer += 1;
-                que.poll();
-                que.offer(cities[i]);
-                }
-               
-            }
-            else {
-                if(que.size() < cacheSize){
-                    answer += 5;
-                    que.offer(cities[i]);
-                }
-                else{
-                answer += 5;
-                que.poll();
-                que.offer(cities[i]);
-                }
+         드
+```
+import java.util.*;
 
-            }
+class Solution {
+    public int solution(int cacheSize, String[] cities) {
+        int answer = 0;
+        
+        LinkedList<String> list = new LinkedList<>();
+        
+        if(cacheSize == 0){
+            return cities.length * 5;
         }
         
-        
+        for(int i=0; i<cities.length;i++){
+            String str = cities[i].toUpperCase();
+            
+            if(list.contains(str)){
+                
+                if(list.size() < cacheSize){
+                    list.add(str);
+                    answer+=1;
+                    
+                }
+                else {
+                    // 들어온거 해당되는 단어 삭제 들어온거 넣고, 삭제한 단어 넣기
+                    list.remove(str);
+                    list.add(str);
+                    answer+=1;
+                }
+            }
+            // 포함 안되있으면
+            else {
+                if(list.size() < cacheSize){
+                    // 맨 앞 삭제후 넣기
+                    list.add(str);
+                    answer+=5;
+                }
+                else {
+                    // 그냥 넣기.
+                    list.remove(0);
+                    list.add(str);
+                    answer+=5;
+                    
+                }
+            }
+            
+        }
         return answer;
     }
 }
-
-```
-[두번째 코드]
-```
-
 ```
