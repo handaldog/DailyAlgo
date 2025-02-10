@@ -1,0 +1,116 @@
+# 70 [백준] 트리의 부모 찾기 </span> 
+
+---
+### 📃 문제 설명
+
+루트 없는 트리가 주어진다. 이때, 트리의 루트를 1이라고 정했을 때, 각 노드의 부모를 구하는 프로그램을 작성하시오.
+
+---
+### 🔑 출력 형식
+
+
+---
+### ❗️ 풀이 
+1. 본래에는 배열안에 arraylist를 이용해서 bfs돌면서 찾기를 했다.
+2. 이번에는 트리를 연습하기 위해서 노드들을 직접 구현하여 답을 구했다.
+
+
+---
+
+### 👩‍💻 배운 점
+
+
+---
+### 💰 코드
+```
+
+import java.util.*;
+
+
+// 트리구조를 구현하여 풀이
+
+public class Main {
+	
+	static Queue<search> que;
+	
+	static class search{
+		int data;
+		int root;
+		
+		search(int data, int root){
+			this.data = data;
+			this.root = root;
+		}
+
+		
+	}
+	
+	static class Node {
+		int data;
+		List<Node> child;
+		
+		Node(int data){
+			this.data = data;
+			this.child = new ArrayList<>();
+		}
+		
+		public void addChild(Node child) {
+			this.child.add(child);
+		}
+	}
+	
+	static Node nodes[];
+	static int check[];
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			Scanner sc = new Scanner(System.in);
+			
+			int n = sc.nextInt();
+			
+			nodes = new Node[n+1];
+			check = new int[n+1];
+			
+			for(int i=0;i<n+1;i++) {
+				nodes[i] = new Node(i);
+			}
+			
+			for(int i=0;i<n-1;i++) {
+				int one = sc.nextInt();
+				int two = sc.nextInt();
+				
+				
+				nodes[one].addChild(nodes[two]);
+				nodes[two].addChild(nodes[one]);
+			}
+			
+				que = new LinkedList<>();
+				que.add(new search(1,0));
+				bfs();
+				
+				for(int i=2;i<n+1;i++) {
+					System.out.println(check[i]);
+				}
+			
+
+	}
+	public static void bfs() {
+		
+		while(!que.isEmpty()) {
+			
+			search se = que.poll();
+			
+			check[se.data] = se.root;
+			
+			for(int i=0;i<nodes[se.data].child.size();i++) {
+				if(check[nodes[se.data].child.get(i).data] > 0) continue;
+				que.add(new search(nodes[se.data].child.get(i).data, se.data));
+					
+			}
+			
+		}
+	}
+
+}
+
+```
